@@ -23,8 +23,6 @@ Preloader and U-boot methods are well covered on Altera documentation being U-bo
 
 Altera Embedded Command Shell (16.1 or newer) should be used to compile the project. Just run "make" and there you go.
 
-If  "socfpga" is presented on LAN then compiled file will be uploaded to */home/root/fpga_manager_test* folder on target.
-
 ## Loading rbf File
 
 RBF file should be created from Quartus Project with compression enabled and MSEL [4:0] pins with 01010 settings. Code is easily modifiable to match other MSEL configurations (keep an eye on *cdgwdth* and *cdratio* registers) but Altera recommends using always FPP x 32 configuration scheme anyways.

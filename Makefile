@@ -29,21 +29,13 @@ CC = $(CROSS_COMPILE)gcc
 LD = $(CROSS_COMPILE)gcc
 ARCH = arm
 
-## UPLOAD FILES TO DE10NANO USING SSH
-# Parameters for SCP upload. Set up SSH keys to bypass password prompt
-SCP_TARGET_IP           = socfpga
-SCP_USER                = root
-SCP_TARGET_PATH         = /home/root/fpga_manager_test
-SCP                     = SCP
-SCP_FLAGS               = -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-
 ## BUILD (DEFAULT) RECIPE
 .PHONY: build
 build: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	$(LD) $(LDFLAGS)   $^ -o $@
-	make upload
+	make
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -53,10 +45,3 @@ $(TARGET): $(OBJECTS)
 clean:
 	rm -f $(TARGET) *.a *.o *~
 
-## UPLOAD RECIPE
-.PHONY: upload
-upload:
-	@echo "*****************************************"
-	@echo "Subiendo archivo por SSH"
-	@echo "*****************************************"
-	$(SCP) $(SCP_FLAGS) $(TARGET) $(SCP_USER)@$(SCP_TARGET_IP):$(SCP_TARGET_PATH)
